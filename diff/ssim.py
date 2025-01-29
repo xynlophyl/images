@@ -16,8 +16,8 @@ class SSIM():
             source_mean: float, 
             target_mean: float
     ) -> float:
-        N = source_kernel.shape[0]*source_kernel.shape[1]*source_kernel.shape[2]
-        return np.sum((source_kernel-source_mean)*(target_kernel-target_mean), axis = (0,1))/(N-1)
+        cov_val = np.cov(source_kernel.flatten(), target_kernel.flatten())[0,1]
+        return np.full((3,), fill_value=cov_val)
     
     def get_bits_per_pixel(self, arr: np.ndarray) -> int | None:
         dtype = str(arr.dtype)
@@ -44,7 +44,7 @@ class SSIM():
 
         return c1, c2
 
-    def measure_ssim_index(self, source_kernel: np.ndarray, target_kernel: np.ndarray, c1: float, c2: float) -> float:
+    def measure_ssim_index(self, source_kernel: np.ndarray, target_kernel: np.ndarray, c1: float, c2: float, flag = False) -> float:
         """
         calculates ssim index of the current kernel
         """
@@ -53,15 +53,15 @@ class SSIM():
         mu_y = np.mean(target_kernel, axis = (0,1))   
 
         # variance
-        var_x = np.var(source_kernel, axis = (0,1))
-        var_y = np.var(target_kernel, axis = (0,1))
+        std_x = np.std(source_kernel, axis = (0,1))
+        std_y = np.std(target_kernel, axis = (0,1))
 
         # covariance
         cov_xy = self.get_covariance(source_kernel, target_kernel, mu_x, mu_y)
 
         # group formula parameters
-        source_params = (mu_x, var_x)
-        target_params = (mu_y, var_y)
+        source_params = (mu_x, std_x)
+        target_params = (mu_y, std_y)
         consts = (cov_xy, c1, c2)
 
         # calculate each individual cov_xyomponent (luminance, contrast, structure)
@@ -82,18 +82,18 @@ class SSIM():
         return (2*mu_x*mu_y+c1) / (mu_x**2+mu_y**2+c1)
 
     def calculate_contrast_similarity(self, source_params: Tuple[float, float], target_params: Tuple[float, float], consts: Tuple[float, float, float]) -> float:
-        _, var_x = source_params
-        _, var_y = target_params
+        _, std_x = source_params
+        _, std_y = target_params
         _, _, c2 = consts
 
-        return (2*(var_x**0.5)*(var_y**0.5)+c2) / (var_x+var_y+c2)
+        return (2*(std_x)*(std_y)+c2) / (std_x**2+std_y**2+c2)
     
     def calculate_structure_similarity(self, source_params: Tuple[float, float], target_params: Tuple[float, float], consts: Tuple[float, float, float]) -> float:
-        _, var_x = source_params
-        _, var_y = target_params
+        _, std_x = source_params
+        _, std_y = target_params
         cov_xy, _, c2 = consts
 
-        return (cov_xy + c2/2) / ((var_x**0.5)*(var_y**0.5) + c2/2)
+        return (cov_xy + c2/2) / ((std_x)*(std_y) + c2/2)
     
     def calculate_global_ssim(self, source: np.ndarray, target: np.ndarray) -> float:
         """
@@ -113,13 +113,12 @@ class SSIM():
         # get ssim constants
         c1, c2 = self.get_image_ssim_constants(source)
         
-        ssim_map = np.zeros_like(source)
+        ssim_map = np.zeros((height, width)).astype(np.float64)
         for y in range(height):
             for x in range(width):
                 cropped_source = padded_source[y:y+self.N, x:x+self.N, :]
                 cropped_target = padded_target[y:y+self.N, x:x+self.N, :]
-                ssim_val = self.measure_ssim_index(cropped_source, cropped_target, c1, c2)
-                ssim_map[y,x,2] = ssim_val*255
-        
-        print('mean ssim', np.mean(ssim_map))
-        return ssim_map
+                ssim_val = self.measure_ssim_index(cropped_source, cropped_target, c1, c2, flag = (y == 0 and x == 0))
+                ssim_map[y,x] = ssim_val
+
+        return np.mean(ssim_map), ssim_map

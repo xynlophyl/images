@@ -14,12 +14,6 @@ def evaluate_ssim(source, target):
     ssim = SSIM(
         window_size = 7
     )
-
-    # generate global ssim score
-    score1 = ssim.calculate_global_ssim(source, target)
-    end = time.time()
-    print(f"ssim score: {score1:.2f}")
-    print(f"time elapsed: {str(end-start) + ' s' if end-start >= 1 else str((end-start)*1000) + ' ms'}")
     
     # get ssim from skimage implementation
     source_gray = rgb2gray(source)

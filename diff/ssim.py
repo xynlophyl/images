@@ -95,14 +95,6 @@ class SSIM():
 
         return (cov_xy + c2/2) / ((std_x)*(std_y) + c2/2)
     
-    def calculate_global_ssim(self, source: np.ndarray, target: np.ndarray) -> float:
-        """
-        assumes that both images are of the same resolution
-        """
-
-        c1, c2 = self.get_image_ssim_constants(source)
-        return self.measure_ssim_index(source, target, c1, c2)
-    
     def generate_ssim_map(self, source: np.ndarray, target: np.ndarray) -> np.ndarray:
         # get image dimensions
         height, width, channels = source.shape

@@ -11,10 +11,10 @@ def convolve(mat: np.ndarray, kernel: np.ndarray, stride: int = 1) -> np.array:
     radius_y, radius_x = kernel_h//2, kernel_w//2
     padded_image = np.pad(mat, pad_width = ((radius_y, radius_y), (radius_x, radius_x), (0,0)))
 
-    output = np.zeros_like(mat, dtype=float)
+    output = np.zeros_like(mat)
     for y in range(0, height, stride):
         for x in range(0, width, stride):
-            crop = padded_image[y,x,:]
+            crop = padded_image[y:y+kernel_h, x:x+kernel_w,:]
             output[y,x,:] = np.sum(crop*kernel[::-1], axis = (0,1))
     
     return output.astype(mat.dtype)

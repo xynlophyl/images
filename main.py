@@ -52,19 +52,25 @@ def main():
     # load image processor
     image_processor = ImageProcessor()
 
-    # # blur image
-    # print('blur')
-    # start = time.time()
-    # blurred_image= image_processor.blur(source_image, mask_size=3)
-    # print(f't: {time.time() - start}')
+    # blur image
+    print('blur')
+    start = time.time()
+    blurred_image = image_processor.blur(source_image, mask_size=11)
+    print(f't: {time.time() - start}')
     
-
-    # print('blur fast')
+    # print('blur naive')
     # start = time.time()
-    # x = image_processor.blur(source_image, mask_size=7, mode="fast-convolve")
+    # x = image_processor.blur(source_image, mask_size=11, method="naive-convolve")
     # print(f't: {time.time() - start}')
 
-    # show_image(cv2.hconcat([source_image, blurred_image, x]))
+    print('blur spatial')
+    start = time.time()
+    y = image_processor.blur(source_image, mask_size=11, method="spatial-convolve")
+    print(f't: {time.time() - start}')
+    # show_image(cv2.hconcat([source_image, y]))
+
+    print((blurred_image == y).all())
+    show_image(cv2.hconcat([blurred_image, y]))
 
     # # sharpen image
     # print('sharpen')
@@ -73,13 +79,16 @@ def main():
 
     # # gaussian blur
     # print('gaussian blur')
-    # gaussian_image = image_processor.gaussian_blur(source_image, std_dev=1.5, mask_size = 11)
-    # show_image(cv2.hconcat([source_image, gaussian_image]))
+    # gaussian_image = image_processor.gaussian_blur(source_image, std_dev=1, mask_size = 11)
+    # x = image_processor.gaussian_blur(source_image, std_dev=1, mask_size = 11, method = "naive-convolve")
+    # y = image_processor.gaussian_blur(source_image, std_dev=1, mask_size = 11, method = "spatial-convolve")
+    # print((gaussian_image==x).all(), (gaussian_image == y).all())
+    # show_image(cv2.hconcat([source_image, gaussian_image, x, y]))
     
-    # ssim
-    img2 = cv2.imread("assets/mona-lisa-gauss-1.png")
 
-    evaluate_ssim(source_image, img2)
+    # # ssim
+    # img2 = cv2.imread("assets/mona-lisa-gauss-1.png")
+    # evaluate_ssim(source_image, img2)
 
 
 if __name__ == "__main__":

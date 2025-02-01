@@ -8,7 +8,7 @@ def naive_convolve(mat: np.ndarray, kernel: np.ndarray, stride: int = 1):
     """
     naive implementation (4 nested loops) of computing convolutions between a (m,n) matrix and a (k,l) kernel
         first, add padding of lengths (k//2, l//2) to the horizontal and vertical sides of the matrix
-        next, for each cell in the original image, calculate the respective convolution:
+        next, for each cell in the original image, calculate the weighted average of the current window of values, 
     """
     # get kernel dimensions
     kernel_h, kernel_w, _ = kernel.shape
@@ -31,7 +31,7 @@ def naive_convolve(mat: np.ndarray, kernel: np.ndarray, stride: int = 1):
 
 def convolve(mat: np.ndarray, kernel: np.ndarray, stride: int = 1) -> np.array:
     """
-    convolution implementation utilizing numpy for faster matrix calculation
+    conolve using numpy for faster matrix calculation
     """
     # get kernel dimensions
     kernel_h, kernel_w, _ = kernel.shape
@@ -53,7 +53,7 @@ def convolve(mat: np.ndarray, kernel: np.ndarray, stride: int = 1) -> np.array:
 
 def spatial_convolve(mat, kernels_xy: List[np.ndarray], stride: int):
     """
-    convolution implemenation utlizing spatial separable kernel, allowing for a more efficient two pass solution 
+    convolve utlizing spatial separable kernel, allowing for a more efficient two pass solution 
     """
     kernel_y, kernel_x = kernels_xy
 
@@ -67,17 +67,17 @@ def spatial_convolve(mat, kernels_xy: List[np.ndarray], stride: int):
 
     # first pass: convolve along y axis
     output = np.zeros_like(mat, dtype = np.float64)
-    for x in range(width):
-        for y in range(height):
+    for x in range(0, width, 1):
+        for y in range(height, stride):
             crop = padded_mat[y:y+y_len,x+r_x,:]
             output[y, x, :] = _calculate_weighted_average(crop, kernel_y[::-1], axis = 0)
 
     # second pass: convolve along x axis
     padded_out = np.pad(output, pad_width = ((r_y, r_y),(r_x, r_x), (0,0)))
     output = np.zeros_like(mat, dtype = np.float64)
-    for y in range(height):
-        for x in range(width):
-            crop = padded_out[y+r_y, x:x+x_len,:]
+    for y in range(0, height, 1):
+        for x in range(0, width, stride):
+            crop = padded_out[y+r_y,x:x+x_len,:]
             output[y,x,:] = _calculate_weighted_average(crop, kernel_x, axis = 0)
 
     return output.astype(mat.dtype)

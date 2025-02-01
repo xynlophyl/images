@@ -61,14 +61,17 @@ class ImageProcessor():
             
             return self._apply_mask(image, mask_rgb, stride = stride, method = method)
     
-    def detect_edges(self, image: np.ndarray, method = "convolve") -> np.ndarray:
+    def detect_edges(self, image: np.ndarray, scale = 1, method = "convolve") -> np.ndarray:
         if method == "spatial-convolve":
             raise ValueError("Method: spatial-convolve is not available for edge detection")
         
         mask = np.array([
-            [0.25, 0.00, -0.25],
-            [0.50, 0.00, -0.50],
-            [0.25, 0.00, -0.25],
-        ])
+            [1, 0.00, -1],
+            [2, 0.00, -2],
+            [1, 0.00, -1],
+        ])*scale
 
-        return self._apply_mask(image, mask, method = method) + self._apply_mask(image, mask.T, method = method)
+        vertical_edges = self.__apply_mask(image, mask, method = method)
+        horizontal_edges = self._apply_mask(image, mask.T, method = method)
+
+        return (vertical_edges**2 + horizontal_edges**2)**0.5

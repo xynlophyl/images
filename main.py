@@ -43,7 +43,8 @@ def evaluate_ssim(source, target):
 def main():
     print("read image")
     # source_path = "assets/jamie_small.jpg"
-    source_path = "assets/mona-lisa.png"
+    source_path = "assets/van-gogh.jpeg"
+    # source_path = "assets/mona-lisa.png"
     source_image = cv2.imread(source_path)
 
     # target_path = "../van-gogh-box-blur.jpeg"
@@ -55,21 +56,19 @@ def main():
     # blur image
     print('blur')
     start = time.time()
-    blurred_image = image_processor.blur(source_image, mask_size=11)
+    blurred_image = image_processor.blur(source_image, mask_size=25)
     print(f't: {time.time() - start}')
     
     # print('blur naive')
     # start = time.time()
-    # x = image_processor.blur(source_image, mask_size=11, method="naive-convolve")
+    # x = image_processor.blur(source_image, mask_size=25, method="naive-convolve")
     # print(f't: {time.time() - start}')
 
     print('blur spatial')
     start = time.time()
-    y = image_processor.blur(source_image, mask_size=11, method="spatial-convolve")
+    y = image_processor.blur(source_image, mask_size=25, method="spatial-convolve")
     print(f't: {time.time() - start}')
-    # show_image(cv2.hconcat([source_image, y]))
 
-    print((blurred_image == y).all())
     show_image(cv2.hconcat([blurred_image, y]))
 
     # # sharpen image
@@ -89,7 +88,6 @@ def main():
     # # ssim
     # img2 = cv2.imread("assets/mona-lisa-gauss-1.png")
     # evaluate_ssim(source_image, img2)
-
 
 if __name__ == "__main__":
     main()

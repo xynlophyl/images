@@ -13,9 +13,10 @@ Sharpening:
 Structural Similarity Index Measure (SSIM): measuring similarity between two images
 
 ### Benchmarks
-400 x 400 pixel image
+#### Convolve (Box-blur, 2500px x 1967px image, mask_size = 25)
 
-    Initial Implementation: 28.41s (can be improved) 
+    Naive (w/ numpy): 82.99s  
+    Two-Pass (Separable Masks): 23.73s
 
 References:
 
@@ -24,7 +25,6 @@ References:
     - But what is a convolution? (3Blue1Brown, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
     - Convolutions in Image Processing (The Julia Programming Language, Youtube): https://www.youtube.com/watch?v=8rrHTtUzyZA
     - 2D Convolution using Python and NumPy (Samrat Sahoo, Medium): https://medium.com/analytics-vidhya/2d-convolution-using-python-numpy-43442ff5f381
-    - All about convolutions, kernels, features in CNN (Abhishek Jain, Medium)
     - A basic introduction to separable convolutions (Chi-Feng Wang, Towards Data Science): https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728
 
 - Image Processing

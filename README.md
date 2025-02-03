@@ -16,7 +16,8 @@ Structural Similarity Index Measure (SSIM): measuring similarity between two ima
 #### Convolve (Box-blur, 2500px x 1967px image, mask_size = 25)
 
     Naive (w/ numpy): 82.99s  
-    Two-Pass (Separable Masks): 23.73s
+    Two-Pass (Separable Masks): 61.29s
+    FFT: 597.75s (???)
 
 References:
 
@@ -31,11 +32,10 @@ References:
     - Image kernels, explained visually (Victor Powell, Blog)
     - Kernel, Image Processing (Wikipedia): https://en.wikipedia.org/wiki/Kernel_(image_processing) 
     - Gaussian Blur (Wikipedia): https://en.wikipedia.org/wiki/Gaussian_blur
-    - 
 
 - Fast Fourier Transform
-    - https://www.youtube.com/watch?v=spUNpyF58BY
-    - https://www.youtube.com/watch?v=h7apO7q16V0
+    The Fast Fourier Transform (FFT): Most Ingenious Algorithm Ever? (Reducible, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
+    - FFT-based 2D convolution (Paper, NVIDIA): https://developer.download.nvidia.com/compute/cuda/2_2/sdk/website/projects/convolutionFFT2D/doc/convolutionFFT2D.pdf
 
 - SSIM
     - https://www.cns.nyu.edu/pub/lcv/wang03-reprint.pdf

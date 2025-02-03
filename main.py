@@ -53,23 +53,36 @@ def main():
     # load image processor
     image_processor = ImageProcessor()
 
+    mask_size = 25
+
     # blur image
-    print('blur')
-    start = time.time()
-    blurred_image = image_processor.blur(source_image, mask_size=25)
-    print(f't: {time.time() - start}')
+    # print('blur')
+    # start = time.time()
+    # blurred_image = image_processor.blur(source_image, mask_size=mask_size)
+    # print(f't: {time.time() - start}')
     
     # print('blur naive')
     # start = time.time()
-    # x = image_processor.blur(source_image, mask_size=25, method="naive-convolve")
+    # x = image_processor.blur(source_image, mask_size=mask_size, method="naive-convolve")
     # print(f't: {time.time() - start}')
 
-    print('blur spatial')
+    # print('blur spatial')
+    # start = time.time()
+    # y = image_processor.blur(source_image, mask_size=mask_size, method="spatial-convolve")
+    # print(f't: {time.time() - start}')
+
+    print("blur fft")
     start = time.time()
-    y = image_processor.blur(source_image, mask_size=25, method="spatial-convolve")
+    z = image_processor.blur(source_image, mask_size=mask_size, method="fft-convolve")
     print(f't: {time.time() - start}')
 
-    show_image(cv2.hconcat([blurred_image, y]))
+    # print(((blurred_image-z).__abs__() <= 1).sum())
+    # print(((blurred_image-y).__abs__() <= 1).sum())
+
+    show_image(cv2.hconcat([z]))
+
+
+
 
     # # sharpen image
     # print('sharpen')

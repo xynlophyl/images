@@ -16,7 +16,7 @@ Structural Similarity Index Measure (SSIM): measuring similarity between two ima
 #### Convolve (Box-blur, 2500px x 1967px image, mask_size = 25)
 
     Naive (w/ numpy): 82.99s  
-    Two-Pass (Separable Masks): 61.29s
+    Two-Pass (Separable Masks): 61.2s
     FFT: 342.16s
 
 ### References:

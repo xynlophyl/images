@@ -109,7 +109,7 @@ def fft_convolve(mat: np.ndarray, kernel: np.ndarray):
         return output[:m].reshape(padded_mat.shape)
     
     dims = len(mat.shape)
-
+    
     # borders for the output image
     kernel_h, kernel_w = kernel.shape[:2]
     b_h = kernel_h//2
@@ -128,3 +128,4 @@ def fft_convolve(mat: np.ndarray, kernel: np.ndarray):
         return np.stack([output_r, output_g, output_b], axis =2)[b_h:-b_h, b_w:-b_w, :].astype(mat.dtype)
     else:
         return _fft_conv(mat)[b_h:-b_h, b_w:-b_w].astype(mat.dtype)
+    

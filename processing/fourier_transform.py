@@ -9,7 +9,7 @@ def get_next_power_of_two(x):
 @functools.cache
 def generate_twiddle(n):
     return np.exp(2*np.pi*1j*np.arange(n//2)/n)
-
+  
 def fast_fourier_transform(mat: np.ndarray):
     def _fft_recur(polynomial: np.ndarray):
         n = len(polynomial)
@@ -64,9 +64,3 @@ def inverse_fast_fourier_transform(mat: np.ndarray):
     output = _inverse_fft_recur(polynomial) / n
 
     return np.round(output)
-
-"""
-TODO: 
-1. FIGURE OUT HOW TO REMOVE PADDING FOR FINAL OUTPUT IMAGE
-2. OPTIMIZE PERFORMANCE (creating the output matrix takes too long currently, figure out a way of allocating the space before running through the recursion?)
-"""

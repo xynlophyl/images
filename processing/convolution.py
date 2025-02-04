@@ -109,7 +109,11 @@ def fft_convolve(mat: np.ndarray, kernel: np.ndarray):
         return output[:m].reshape(padded_mat.shape)
     
     dims = len(mat.shape)
-    height, width = mat.shape[:2]
+
+    # borders for the output image
+    kernel_h, kernel_w = kernel.shape[:2]
+    b_h = kernel_h//2
+    b_w = kernel_w//2
 
     if dims > 3:
         raise ValueError("np.ndarray dimensionality > 3 is not handled in current impl")
@@ -121,8 +125,6 @@ def fft_convolve(mat: np.ndarray, kernel: np.ndarray):
         output_g = _fft_conv(mat_g, kernel_g)
         output_b = _fft_conv(mat_b, kernel_b)
 
-        return np.stack([output_r, output_g, output_b], axis =2)[1:height+1, 1:width+1,:].astype(mat.dtype)
+        return np.stack([output_r, output_g, output_b], axis =2)[b_h:-b_h, b_w:-b_w, :].astype(mat.dtype)
     else:
-        return _fft_conv(mat)[1:height+1, 1+width+1].astype(mat.dtype)
-
-# removed stride
+        return _fft_conv(mat)[b_h:-b_h, b_w:-b_w].astype(mat.dtype)

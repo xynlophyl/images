@@ -1,17 +1,17 @@
 import numpy as np
 import functools
     
-def get_next_power_of_two(x):
+def get_next_power_of_two(x: int) -> int:
     exponent = np.log2(x)
 
     return np.ceil(exponent).astype(int)
 
 @functools.cache
-def generate_twiddle(n):
+def generate_twiddle(n: int) -> np.ndarray:
     return np.exp(2*np.pi*1j*np.arange(n//2)/n)
   
-def fast_fourier_transform(mat: np.ndarray):
-    def _fft_recur(polynomial: np.ndarray):
+def fast_fourier_transform(mat: np.ndarray) -> np.ndarray:
+    def _fft_recur(polynomial: np.ndarray) -> np.ndarray:
         n = len(polynomial)
         if n == 1:
             return polynomial
@@ -39,8 +39,8 @@ def fast_fourier_transform(mat: np.ndarray):
 
     return _fft_recur(padded_polynomial)
 
-def inverse_fast_fourier_transform(mat: np.ndarray):
-    def _inverse_fft_recur(polynomial: np.ndarray):
+def inverse_fast_fourier_transform(mat: np.ndarray) -> np.ndarray:
+    def _inverse_fft_recur(polynomial: np.ndarray) -> np.ndarray:
         n = len(polynomial)
         if n == 1:
             return polynomial

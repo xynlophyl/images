@@ -35,7 +35,7 @@ Structural Similarity Index Measure (SSIM): measuring similarity between two ima
 
 - Fast Fourier Transform
     - The Fast Fourier Transform (FFT): Most Ingenious Algorithm Ever? (Reducible, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
-    - FFT-based 2D convolution (Paper, NVIDIA): https://developer.download.nvidia.com/compute/cuda/2_2/sdk/website/projects/convolutionFFT2D/doc/convolutionFFT2D.pdf
+    - FFT-based 2D convolution (Research Paper, NVIDIA): https://developer.download.nvidia.com/compute/cuda/2_2/sdk/website/projects/convolutionFFT2D/doc/convolutionFFT2D.pdf
 
 - SSIM
     - https://www.cns.nyu.edu/pub/lcv/wang03-reprint.pdf

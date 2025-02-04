@@ -17,11 +17,11 @@ Structural Similarity Index Measure (SSIM): measuring similarity between two ima
 
     Naive (w/ numpy): 82.99s  
     Two-Pass (Separable Masks): 61.29s
-    FFT: 597.75s (???)
+    FFT: 342.16s
 
-References:
+### References:
 
-- Convolution
+- Convolutions
     - Convolution (Wikipedia): https://en.wikipedia.org/wiki/Convolution
     - But what is a convolution? (3Blue1Brown, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
     - Convolutions in Image Processing (The Julia Programming Language, Youtube): https://www.youtube.com/watch?v=8rrHTtUzyZA
@@ -29,12 +29,12 @@ References:
     - A basic introduction to separable convolutions (Chi-Feng Wang, Towards Data Science): https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728
 
 - Image Processing
-    - Image kernels, explained visually (Victor Powell, Blog)
     - Kernel, Image Processing (Wikipedia): https://en.wikipedia.org/wiki/Kernel_(image_processing) 
     - Gaussian Blur (Wikipedia): https://en.wikipedia.org/wiki/Gaussian_blur
+    - Image Kernels, explained visually (Victor Powell, Blog): https://setosa.io/ev/image-kernels/#:~:text=An%20image%20kernel%20is%20a,important%20portions%20of%20an%20image.
 
 - Fast Fourier Transform
-    The Fast Fourier Transform (FFT): Most Ingenious Algorithm Ever? (Reducible, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
+    - The Fast Fourier Transform (FFT): Most Ingenious Algorithm Ever? (Reducible, Youtube): https://www.youtube.com/watch?v=KuXjwB4LzSA
     - FFT-based 2D convolution (Paper, NVIDIA): https://developer.download.nvidia.com/compute/cuda/2_2/sdk/website/projects/convolutionFFT2D/doc/convolutionFFT2D.pdf
 
 - SSIM

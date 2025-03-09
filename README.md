@@ -41,3 +41,6 @@ Structural Similarity Index Measure (SSIM): measuring similarity between two ima
     - https://www.cns.nyu.edu/pub/lcv/wang03-reprint.pdf
     - https://en.wikipedia.org/wiki/Structural_similarity_index_measure
     - https://scikit-image.org/docs/0.24.x/auto_examples/transform/plot_ssim.html#structural-similarity-index
+
+- GrabCut (Foreground Segmentation)
+    - GrabCut - Interactive Foreground Extraction using Iterated Graph Cuts (Research Paper, Microsoft): https://www.microsoft.com/en-us/research/wp-content/uploads/2004/08/siggraph04-grabcut.pdf

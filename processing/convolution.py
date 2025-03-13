@@ -106,7 +106,7 @@ def fft_convolve(mat: np.ndarray, kernel: np.ndarray):
         output = inverse_fast_fourier_transform(output_fft)
 
         m = padded_mat.shape[0]*padded_mat.shape[1]
-        return output[:m].reshape(padded_mat.shape)
+        return np.round(output[:m].reshape(padded_mat.shape))
     
     dims = len(mat.shape)
     

@@ -18,9 +18,7 @@ def process_image(
         "gaussian": image_processor.gaussian_blur,
         "ridge": image_processor.detect_edges
     }
-
-    print(kwargs)
-
+    
     oper = operations[operation]
 
     start = time.time()

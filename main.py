@@ -1,5 +1,6 @@
 import argparse
 import cv2
+import os
 from tests import process_image, compare_images
 
 CONVOLUTIONS = ["blur", "sharpen", "gaussian", "ridge"]
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--method",
-        choices = ["naive", "spatial", "fft"]
+        choices = ["naive", "convolve", "spatial", "fft"]
     )
 
     parser.add_argument("--targetpath")
@@ -26,8 +27,11 @@ if __name__ == "__main__":
     parser.add_argument("--window-size", type= int)
 
     args = parser.parse_args()
+    if not os.path.exists(args.sourcepath):
+        raise FileNotFoundError(args.sourcepath)
 
-    # add argument conditions (i.e. window size for ssim)
+    #TODO add argument conditions (i.e. window size for ssim)
+
 
     source_image = cv2.imread(args.sourcepath)
     action = args.action
@@ -37,8 +41,6 @@ if __name__ == "__main__":
     del kwargs["action"]
 
     if action in CONVOLUTIONS:
-        print('action', action)
-        print(kwargs)
         process_image(source_image, action, **kwargs)
     
     elif action == "ssim":
